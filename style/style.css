@@ -32,6 +32,7 @@ main {
 #img--back {
     width: 100%;
     position: relative;
+    opacity: 0.8;
 }
 
 .group {
