@@ -1,5 +1,6 @@
 :root {
-    -main--color: green;
+    --main--color: #E3B196;
+    --background--color: #331D11;
 }
 
 * {
@@ -7,9 +8,19 @@
     padding: 0;
 }
 
+body {
+    background: var(--background--color);
+    align-items: center;
+}
+
 main {
     display: flex;
     flex-direction: column;
+    align-items: center;
+    margin: auto;
+    border: 1px inset var(--main--color);
+    
+    width: 80%;
 }
 
 #img--back {
