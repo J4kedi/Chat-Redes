@@ -3,6 +3,7 @@
     --background--color: #331D11;
     --secundary--color: #7D685C;
     --terciary--color: #B0A097;
+    --text--color: #c9c2c2;
 }
 
 * {
@@ -23,8 +24,9 @@ main {
     margin: auto;
     border: 1px inset var(--main--color);
     
+    margin-top: 8vh;
     width: 80%;
-    box-shadow: 6px 6px 10px var(--main--color);
+    box-shadow: 2px 2px 6px var(--main--color);
 }
 
 #img--back {
@@ -34,47 +36,30 @@ main {
 
 .group {
     position: absolute;
-    bottom: 0;
+    bottom: 15px;
+    width: 80%;
 }
 
 .input {
-    font-size: 16px;
+    font-size: 20px;
     padding: 10px 10px 10px 5px;
     display: block;
-    width: 200px;
+    width: 80%;
     border: none;
     border-bottom: 1px solid #515151;
     background: transparent;
+
+    color: var(--text--color);
 }
 
 .input:focus {
     outline: none;
 }
 
-label {
-    color: #999;
-    font-size: 18px;
-    font-weight: normal;
-    position: absolute;
-    pointer-events: none;
-    left: 5px;
-    top: 10px;
-    transition: 0.2s ease all;
-    -moz-transition: 0.2s ease all;
-    -webkit-transition: 0.2s ease all;
-}
-
-.input:focus~label,
-.input:valid~label {
-    top: -20px;
-    font-size: 14px;
-    color: #5264AE;
-}
-
 .bar {
     position: relative;
     display: block;
-    width: 200px;
+    width: 85%;
 }
 
 .bar:before,
@@ -82,9 +67,9 @@ label {
     content: '';
     height: 2px;
     width: 0;
-    bottom: 1px;
+    bottom: 0px;
     position: absolute;
-    background: #5264AE;
+    background: var(--secundary--color);
     transition: 0.2s ease all;
     -moz-transition: 0.2s ease all;
     -webkit-transition: 0.2s ease all;
@@ -106,7 +91,7 @@ label {
 .highlight {
     position: absolute;
     height: 60%;
-    width: 100px;
+    width: 80%;
     top: 25%;
     left: 0;
     pointer-events: none;
@@ -119,7 +104,7 @@ label {
 
 @keyframes inputHighlighter {
     from {
-        background: #5264AE;
+        background: var(--terciary--color);
     }
 
     to {
@@ -133,19 +118,19 @@ label {
     width: 8em;
     border-radius: 0.2em;
     border: 0.1rem solid transparent;
-    background-color: rgb(64, 146, 239);
+    background-color: var(--terciary--color);
     transition: 0.3s;
     font-size: 1em;
 
     position: absolute;
     right: 0;
     bottom: 0;
-    margin: 10px;
+    margin: 15px;
 }
 
 .button:hover {
     cursor: pointer;
-    transform: scale(1.05) rotate(3deg);
+    transform: scale(1.05);
 }
 
 .button:active {
@@ -153,45 +138,22 @@ label {
     transform: scale(0.9) rotate(-3deg);
     background-color: rgb(0, 0, 0);
     color: rgba(160, 196, 238, 0.475);
-    border: 0.1rem solid rgb(38, 103, 224);
+    border: 0.1rem solid var(--secundary--color);
 }
 
 @keyframes borderMove {
     0% {
         border-width: 0.1rem;
-        transform: scale(1) rotate(0deg);
+        transform: scale(1);
     }
 
     50% {
         border-width: 0.4rem;
-        transform: scale(0.9) rotate(-3deg);
+        transform: scale(0.9);
     }
 
     100% {
         border-width: 0.15rem;
-        transform: scale(1) rotate(0deg);
+        transform: scale(1);
     }
-}
-
-
-.text {
-    width: 100%;
-    max-width: 220px;
-    height: 45px;
-    padding: 12px;
-    border-radius: 12px;
-    border: 1.5px solid lightgrey;
-    outline: none;
-    transition: all 0.3s cubic-bezier(0.19, 1, 0.22, 1);
-    box-shadow: 0px 0px 20px -18px;
-}
-
-.text {
-    border: 2px solid lightgrey;
-    box-shadow: 0px 0px 20px -17px;
-    transform: scale(0.95);
-}
-
-.text:focus {
-    border: 2px solid grey;
 }
