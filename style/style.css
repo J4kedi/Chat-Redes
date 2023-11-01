@@ -15,3 +15,161 @@ main {
 #img--back {
     width: 50%;
 }
+
+.group {
+    position: relative;
+}
+
+.input {
+    font-size: 16px;
+    padding: 10px 10px 10px 5px;
+    display: block;
+    width: 200px;
+    border: none;
+    border-bottom: 1px solid #515151;
+    background: transparent;
+}
+
+.input:focus {
+    outline: none;
+}
+
+label {
+    color: #999;
+    font-size: 18px;
+    font-weight: normal;
+    position: absolute;
+    pointer-events: none;
+    left: 5px;
+    top: 10px;
+    transition: 0.2s ease all;
+    -moz-transition: 0.2s ease all;
+    -webkit-transition: 0.2s ease all;
+}
+
+.input:focus~label,
+.input:valid~label {
+    top: -20px;
+    font-size: 14px;
+    color: #5264AE;
+}
+
+.bar {
+    position: relative;
+    display: block;
+    width: 200px;
+}
+
+.bar:before,
+.bar:after {
+    content: '';
+    height: 2px;
+    width: 0;
+    bottom: 1px;
+    position: absolute;
+    background: #5264AE;
+    transition: 0.2s ease all;
+    -moz-transition: 0.2s ease all;
+    -webkit-transition: 0.2s ease all;
+}
+
+.bar:before {
+    left: 50%;
+}
+
+.bar:after {
+    right: 50%;
+}
+
+.input:focus~.bar:before,
+.input:focus~.bar:after {
+    width: 50%;
+}
+
+.highlight {
+    position: absolute;
+    height: 60%;
+    width: 100px;
+    top: 25%;
+    left: 0;
+    pointer-events: none;
+    opacity: 0.5;
+}
+
+.input:focus~.highlight {
+    animation: inputHighlighter 0.3s ease;
+}
+
+@keyframes inputHighlighter {
+    from {
+        background: #5264AE;
+    }
+
+    to {
+        width: 0;
+        background: transparent;
+    }
+}
+
+.button {
+    height: 2em;
+    width: 5em;
+    border-radius: 1em;
+    border: 0.1rem solid transparent;
+    background-color: rgb(64, 146, 239);
+    transition: 0.3s;
+    font-size: 1em;
+}
+
+.button:hover {
+    cursor: pointer;
+    transform: scale(1.05) rotate(3deg);
+}
+
+.button:active {
+    animation: borderMove 0.5s forwards;
+    transform: scale(0.9) rotate(-3deg);
+    background-color: rgb(0, 0, 0);
+    color: rgba(160, 196, 238, 0.475);
+    border: 0.1rem solid rgb(38, 103, 224);
+}
+
+@keyframes borderMove {
+    0% {
+        border-width: 0.1rem;
+        transform: scale(1) rotate(0deg);
+    }
+
+    50% {
+        border-width: 0.4rem;
+        transform: scale(0.9) rotate(-3deg);
+    }
+
+    100% {
+        border-width: 0.15rem;
+        transform: scale(1) rotate(0deg);
+    }
+}
+
+
+.text {
+    width: 100%;
+    max-width: 220px;
+    height: 45px;
+    padding: 12px;
+    border-radius: 12px;
+    border: 1.5px solid lightgrey;
+    outline: none;
+    transition: all 0.3s cubic-bezier(0.19, 1, 0.22, 1);
+    box-shadow: 0px 0px 20px -18px;
+}
+
+.text {
+    border: 2px solid lightgrey;
+    box-shadow: 0px 0px 20px -17px;
+    transform: scale(0.95);
+}
+
+.text:focus {
+    border: 2px solid grey;
+}
