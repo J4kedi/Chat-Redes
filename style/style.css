@@ -1,6 +1,8 @@
 :root {
     --main--color: #E3B196;
     --background--color: #331D11;
+    --secundary--color: #7D685C;
+    --terciary--color: #B0A097;
 }
 
 * {
@@ -14,6 +16,7 @@ body {
 }
 
 main {
+    position: relative;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -21,14 +24,17 @@ main {
     border: 1px inset var(--main--color);
     
     width: 80%;
+    box-shadow: 6px 6px 10px var(--main--color);
 }
 
 #img--back {
-    width: 50%;
+    width: 100%;
+    position: relative;
 }
 
 .group {
-    position: relative;
+    position: absolute;
+    bottom: 0;
 }
 
 .input {
@@ -124,12 +130,17 @@ label {
 
 .button {
     height: 2em;
-    width: 5em;
-    border-radius: 1em;
+    width: 8em;
+    border-radius: 0.2em;
     border: 0.1rem solid transparent;
     background-color: rgb(64, 146, 239);
     transition: 0.3s;
     font-size: 1em;
+
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    margin: 10px;
 }
 
 .button:hover {
