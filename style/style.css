@@ -1,5 +1,6 @@
 :root {
-    -main--color: green;
+    --main--color: #E3B196;
+    --background--color: #331D11;
 }
 
 * {
@@ -7,11 +8,28 @@
     padding: 0;
 }
 
+body {
+    background: var(--background--color);
+    align-items: center;
+}
+
 main {
     display: flex;
     flex-direction: column;
+    align-items: center;
+    margin: auto;
+    border: 1px inset var(--main--color);
+    
+    width: 80%;
 }
 
 #img--back {
-    width: 50%;
+    width: 100%;
+    opacity: 0.7;
+    box-shadow: 5px 5px 10px var(--main--color);
+}
+
+.input {
+    position: absolute;
+    top: 40;
 }
