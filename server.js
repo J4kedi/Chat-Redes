@@ -1,11 +1,13 @@
 const express = require('express');
 const { createServer } = require('node:http');
-const { join } = require('node:path');
+const ipAddress = '26.143.149.78';
 const { Server } = require('socket.io');
 
 const app = express();
 const server = createServer(app);
 const io = new Server(server);
+
+// const clienteIdUnico = generateUniqueId();
 
 const messages = [];
 
@@ -29,8 +31,6 @@ io.on('connection', (socket) => {
     });
 });
 
-server.listen(3000, () => {
+server.listen(3000, ipAddress, () => {
     console.log('Servidor rodando na porta 3000');
 });
-
-io.emit('hello', 'world'); 

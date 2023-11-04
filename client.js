@@ -4,7 +4,7 @@ const form = document.getElementById('form');
 const input = document.querySelector('.input');
 const campoMensagem = document.getElementById('campo-mensagem');
 
-const maxMessageHistory = 2;
+const maxMessageHistory = 6;
 
 socket.on('message history', (history) => {
     // Exibir o histórico de mensagens para o novo usuário
@@ -37,6 +37,6 @@ socket.on('chat message', (msg) => {
 
     history.push(msg);
     if (history.length > maxMessageHistory) {
-        history.shift(); // Remover a mensagem mais antiga
+        history.shift();
     }
 });
