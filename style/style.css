@@ -16,7 +16,7 @@ body {
     align-items: center;
 }
 
-main {
+#main {
     position: relative;
     display: flex;
     flex-direction: column;
