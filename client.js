@@ -15,7 +15,7 @@ socket.on('message history', (history) => {
     limitedHistory.forEach((msg) => {
         const item = document.createElement('li');
         item.textContent = msg;
-        campoMensagem.classList.add('active');
+
         campoMensagem.appendChild(item);
     });
 });
@@ -32,8 +32,8 @@ socket.on('chat message', (msg) => {
     const item = document.createElement('li');
     item.textContent = msg;
     campoMensagem.appendChild(item);
-    campoMensagem.classList.add('active');
-    campoMensagem.scrollTo(0, document.body.scrollHeight);
+
+    window.scrollTo(0, document.body.scrollHeight);
 
     history.push(msg);
     if (history.length > maxMessageHistory) {

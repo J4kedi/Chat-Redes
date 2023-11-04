@@ -9,26 +9,6 @@ const io = new Server(server);
 
 const messages = [];
 
-// Lista de arquivos estáticos que você deseja servir
-const staticFiles = [
-    'assets/mononoke.jpg',
-    'assets/apple-touch-icon.png',
-    'assets/favicon-32x32.png',
-    'assets/favicon-16x16.png',
-];
-
-app.get('/assets/apple-touch-icon.png', (req, res) => {
-    res.sendFile(join(__dirname + '/assets/apple-touch-icon.png'));
-});
-
-app.get('/assets/favicon-32x32.png', (req, res) => {
-    res.sendFile(join(__dirname + '/assets/favicon-32x32.png'));
-});
-
-app.get('/assets/favicon-16x16.png', (req, res) => {
-    res.sendFile(join(__dirname + '/assets/favicon-16x16.png'));
-});
-
 app.use(express.static(__dirname));
 
 io.on('connection', (socket) => {
