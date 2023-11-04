@@ -12,14 +12,18 @@
     <title>ChatPapo</title>
 </head>
 <body>
-    <main id="campo-mensagem">
-        <img src="assets/Mononoke.jpg" alt="Mononoke" id="img--back">
-        <div class="group">
-            <input required="" type="text" class="input" placeholder="Digite uma mensagem">
-            <span class="highlight"></span>
-            <span class="bar"></span>
-        </div>
-        <button class="button">Enviar</button>
+    <main>
+        <ul id="campo-mensagem"></ul>
+
+        <form id="form" action="">
+            <img src="assets/Mononoke.jpg" alt="Mononoke" id="img--back">
+            <div class="group">
+                <input type="text" class="input" placeholder="Digite uma mensagem">
+                <span class="highlight"></span>
+                <span class="bar"></span>
+            </div>
+            <button class="button">Enviar</button>
+        </form>
     </main>
     <script src="https://cdn.socket.io/4.5.4/socket.io.min.js"></script>
     <script src="client.js"></script>

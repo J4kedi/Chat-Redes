@@ -7,6 +7,8 @@ const app = express();
 const server = createServer(app);
 const io = new Server(server);
 
+const messages = [];
+
 // Lista de arquivos estáticos que você deseja servir
 const staticFiles = [
     'assets/mononoke.jpg',
@@ -17,23 +19,31 @@ const staticFiles = [
 
 app.get('/assets/apple-touch-icon.png', (req, res) => {
     res.sendFile(join(__dirname + '/assets/apple-touch-icon.png'));
-    console.log("deu certo");
 });
 
 app.get('/assets/favicon-32x32.png', (req, res) => {
     res.sendFile(join(__dirname + '/assets/favicon-32x32.png'));
-    console.log("deu certo");
 });
 
 app.get('/assets/favicon-16x16.png', (req, res) => {
     res.sendFile(join(__dirname + '/assets/favicon-16x16.png'));
-    console.log("deu certo");
 });
 
 app.use(express.static(__dirname));
 
 io.on('connection', (socket) => {
     console.log('a user connected');
+
+    socket.on('chat message', (msg) => {
+        console.log('message: ' + msg);
+
+        messages.push(msg);
+
+        io.emit('chat message', msg);
+    });
+
+    socket.emit('message history', messages);
+
     socket.on('disconnect', () => {
       console.log('user disconnected');
     });
@@ -42,3 +52,5 @@ io.on('connection', (socket) => {
 server.listen(3000, () => {
     console.log('Servidor rodando na porta 3000');
 });
+
+io.emit('hello', 'world'); 
