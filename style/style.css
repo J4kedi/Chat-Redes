@@ -36,7 +36,6 @@ body {
     align-items: center;
     margin: auto;
     border: 1px inset var(--main--color);
-    
     margin-top: 8vh;
     width: 80%;
     box-shadow: 2px 2px 6px var(--main--color);
@@ -90,8 +89,7 @@ body {
     border: none;
     border-bottom: 1px solid #515151;
     background: transparent;
-    margin-left: 5vw;
-
+    margin-left: 5vw;;
     color: var(--text--color);
 }
 
@@ -196,8 +194,8 @@ body {
     position: relative;
     margin-top: 30vh;
     margin-right: 30vh;
-    width: 250px;
-    height: 320px;
+    width: 300px;
+    height: 350px;
     border-radius: 16px;
     overflow: hidden;
 }
@@ -206,7 +204,7 @@ body {
     width: 100px;
     height: 100px;
     margin-top: 2em;
-    margin-left: 4.5em;
+    margin-left: 6em;
     margin-right: 2em;
     position: absolute;
     z-index: 2;
@@ -275,7 +273,8 @@ body {
     font-family: 'Segoe UI', sans-serif;
     margin: 1em 0 1em 0.3em;
     max-width: 190px;
-    position: relative;
+    position: absolute;
+    padding-left: 10%;
 }
 
 .inputGroup input {
@@ -292,7 +291,7 @@ body {
     font-size: 100%;
     font-weight: 400;
     position: absolute;
-    left: 0;
+    left: 10%;
     padding: 0.8em;
     margin-left: 0.3em;
     pointer-events: none;
@@ -312,6 +311,37 @@ body {
 .inputGroup :is(input:focus, input:valid) {
     border-color: rgb(150, 150, 200);
 }
+/* Botao Inicial */
+
+.botao-inicio {
+    position: absolute;
+    right: 100px;
+    bottom: 40px;
+    width: fit-content;
+    min-width: 100px;
+    height: 45px;
+    padding: 10px;
+    border-radius: 10px;
+    border: 2.5px solid #E0E1E4;
+    box-shadow: 0px 0px 20px -20px;
+    cursor: pointer;
+    background-color: transparent;
+    transition: all 0.2s ease-in-out 0ms;
+    user-select: none;
+    font-family: 'Poppins', sans-serif;
+    color:#dbdbdb;
+
+}
+
+.botao-inicio:hover {
+    background-color: #F2F2F2;
+    box-shadow: 0px 0px 20px -18px;
+}
+
+.botao-inicio:active {
+    transform: scale(0.95);
+}
+
 
 /* Animations */
 
