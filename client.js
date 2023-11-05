@@ -6,6 +6,34 @@ const campoMensagem = document.getElementById('campo-mensagem');
 
 const maxMessageHistory = 6;
 
+
+// Redirecionar para chat
+
+function submitUsername() {
+    var username = $('#username').val();
+
+    $.ajax({
+        url: '/login',
+        type: 'POST',
+        data: {
+            username: username
+        },
+        success: function (response) {
+            if (response.success) {
+                // Redireciona para a página do chat
+                window.location.href = '/chat';
+            } else {
+                // Trata o erro
+                console.log(response.message);
+            }
+        },
+        error: function (error) {
+            // Trata o erro
+            console.log(error);
+        }
+    });
+}
+
 socket.on('message history', (history) => {
     // Exibir o histórico de mensagens para o novo usuário
 
