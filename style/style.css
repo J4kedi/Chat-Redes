@@ -1,9 +1,9 @@
 @import url('https://fonts.googleapis.com/css2?family=Jost:wght@300;400;500;700&display=swap');
 
 :root {
-    --main--color: #E3B196;
-    --background--color: #331D11;
-    --secundary--color: #7D685C;
+    --main--color: #B1B583;
+    --background--color: #170506;
+    --secundary--color: #CCCFA1;
     --terciary--color: #B0A097;
     --text--color: #c9c2c2;
 }
@@ -15,7 +15,6 @@
 
 
 body {
-    align-items: center;
     font-family: 'Jost', sans-serif;
     background-color: var(--background--color);
 }
@@ -28,14 +27,12 @@ video {
 
 #main {
     position: relative;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
     margin: auto;
-    border: 1px inset var(--main--color);
     margin-top: 8vh;
     width: 80%;
-    box-shadow: 2px 2px 6px var(--main--color);
+    height: 85vh;
+    box-shadow: 0px 8px 28px -9px var(--main--color);
+    border-radius: 20px;
 }
 
 #campo-mensagem {
@@ -68,16 +65,26 @@ li:nth-child(odd) {
     opacity: 0.85;
 }
 
+#form {
+    background-color: var(--background--color);
+    width: 95%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
 #img--back {
     width: 100%;
-    position: relative;
+    height: 100%;
+    position: absolute;
     opacity: 0.75;
+    border-radius: 20px;
 }
 
 .group {
     position: absolute;
     bottom: 15px;
-    width: 80%;
+    width: 100%;
 }
 
 .input {
@@ -160,14 +167,14 @@ li:nth-child(odd) {
     width: 8em;
     border-radius: 0.2em;
     border: 0.1rem solid transparent;
-    background-color: var(--terciary--color);
+    background-color: var(--secundary--color);
     transition: 0.3s;
     font-size: 1em;
 
     position: absolute;
     right: 0;
     bottom: 0;
-    margin: 15px;
+    margin: 20px;
 }
 
 .button:hover {
@@ -270,7 +277,6 @@ li:nth-child(odd) {
 /* Input inicial */
 
 .inputGroup {
-    font-family: 'Segoe UI', sans-serif;
     margin: 1em 0 1em 0.3em;
     max-width: 190px;
     position: absolute;
