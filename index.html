@@ -1,31 +1,32 @@
 <!DOCTYPE html>
 <html lang="pt-br">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style/style.css">
-    <link rel="apple-touch-icon" type="image/png" sizes="180x180" href="assets/apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="assets/favicon-16x16.png">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="style/style.css">
+        <script src="gif-render.js"></script>
+        <title>Login</title>
+    </head>
+    <body>
+        <video autoplay loop muted>
+            <source src="assets/gif-mononoke.mp4" type="video/mp4">
+        </video>
 
-    <title>ChatPapo</title>
-</head>
-<body>
-    <main id="main">
-        <ul id="campo-mensagem"></ul>
-        <img src="assets/Mononoke.jpg" alt="Mononoke" id="img--back">
+        <div class="e-card playing">
+            <img src="assets/Medicine-Seller-Icon.png" alt="icone inicial" class="icon">
 
-        <form id="form" action="">
-            <div class="group">
-                <input type="text" class="input" placeholder="Digite uma mensagem">
-                <span class="highlight"></span>
-                <span class="bar"></span>
+            <div class="wave"></div>
+            <div class="wave"></div>
+            <div class="wave"></div>
+
+            <div class="infotop">
+                <p id="Chat">Chat PaPo</p>
+                <div class="inputGroup">
+                    <input type="text" required="" autocomplete="off">
+                    <label for="name">Nome</label>
+                </div>
             </div>
-            <button class="button">Enviar</button>
-        </form>
-    </main>
-    <script src="https://cdn.socket.io/4.5.4/socket.io.min.js"></script>
-    <script src="client.js"></script>
-</body>
+            <a href="index.html"><button class="botao-inicio ">Entrar</button></a>
+        </div>
+    </body>
 </html>
