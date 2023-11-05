@@ -5,12 +5,15 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" href="loginstyle.css">
         <link rel="stylesheet" href="style/style.css">
+        <script src="gif-render.js"></script>
         <title>Login</title>
     </head>
     <body>
-        <img src="assets\the-medicine-seller-mononoke.gif" alt="mononoke gif" class="background">
-        <div class="e-card playing">
+        <video autoplay loop muted>
+            <source src="assets/gif-mononoke.mp4" type="video/mp4"> <!-- Substitua 'seu_video.mp4' pelo caminho para o seu vídeo -->
+        </video>
 
+        <div class="e-card playing">
             <img src="assets/Medicine-Seller-Icon.png" alt="icone inicial" class="icon">
 
             <div class="wave"></div>
@@ -18,13 +21,13 @@
             <div class="wave"></div>
 
             <div class="infotop">
-            <br>
-            Chat PaPo
-            <br>
-            <div class="inputGroup">
-                <input type="text" required="" autocomplete="off">
-                <label for="name">Nome</label>
-            </div>
+                <br>
+                <p id="Chat">Chat PaPo</p>
+                <br>
+                <div class="inputGroup">
+                    <input type="text" required="" autocomplete="off">
+                    <label for="name">Nome</label>
+                </div>
             </div>
 
             <a href="index.html"><button class="botao-inicio ">Entrar</button></a>
