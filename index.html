@@ -7,6 +7,8 @@
         <link rel="apple-touch-icon" type="image/png" sizes="180x180" href="assets/apple-touch-icon.png">
         <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32x32.png">
         <link rel="icon" type="image/png" sizes="16x16" href="assets/favicon-16x16.png">
+        <script src="https://cdn.socket.io/4.5.4/socket.io.min.js"></script>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
         <title>Login Chat PaPo</title>
     </head>
     <body>
@@ -24,11 +26,12 @@
             <div class="infotop">
                 <p id="Chat">Chat PaPo</p>
                 <div class="inputGroup">
-                    <input type="text" required="" autocomplete="off">
+                    <input type="text" name="name" id="name" autocomplete="off" required>
                     <label for="name">Nome</label>
                 </div>
             </div>
-            <a href="inicial.html"><button class="botao-inicio ">Entrar</button></a>
+            <button class="botao-inicio">Entrar</button>
+            <script src="client.js"></script>
         </div>
     </body>
 </html>

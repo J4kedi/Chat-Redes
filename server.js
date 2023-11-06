@@ -1,6 +1,6 @@
 const express = require('express');
-const { createServer } = require('node:http');
-const ipAddress = '26.129.17.144';
+const { createServer } = require('http');
+const ipAddress = '127.0.0.1';
 const { Server } = require('socket.io');
 
 const app = express();
@@ -8,32 +8,43 @@ const server = createServer(app);
 const io = new Server(server);
 
 //Gerenciar Sessoes
-var session = require('express-session');
+const session = require('express-session');
 
-app.use(session({
-    secret: 'your secret',
+const messages = [];
+
+const expressSession = session({
+    secret: 'du@VT~2Wr4p]I*|)JLt%j3R03Mm%_XgB',
     resave: false,
     saveUninitialized: true
+});
+
+app.use(expressSession);
+
+const sharedsession = require("express-socket.io-session");
+io.use(sharedsession(expressSession, {
+    autoSave:true
 }));
+
+app.use(express.json()); // Para analisar application/json
+app.use(express.urlencoded({ extended: true })); // Para analisar application/x-www-form-urlencoded
 
 app.get('/', function (req, res) {
     if (req.session.authenticated) {
-        res.redirect('/chat');
+        res.redirect('/bola.html');
     } else {
         res.sendFile(__dirname + '/index.html');
     }
 });
 
 app.post('/login', function (req, res) {
-    var username = req.body.username;
+    const username = req.body.username;
 
-    // Verifique se o nome de usuário é válido
-    // Isso dependerá de como você está armazenando os usuários
-    // Neste exemplo, vamos assumir que você tem uma função `isValidUsername()` que faz isso
     if (isValidUsername(username)) {
         // Armazene o nome de usuário na sessão do usuário
         req.session.username = username;
         req.session.authenticated = true;
+
+        console.log(`${username}|message: ${username}`)
 
         // Envie uma resposta de sucesso
         res.send({ success: true });
@@ -43,19 +54,28 @@ app.post('/login', function (req, res) {
     }
 });
 
-const messages = [];
 
 app.use(express.static(__dirname));
 
 io.on('connection', (socket) => {
     console.log('a user connected');
 
+    // Agora você pode acessar a sessão do express aqui
+    console.log("Session Data:", socket.handshake.session);
+    
     socket.on('chat message', (msg) => {
         console.log('message: ' + msg);
 
-        messages.push(msg);
+        if (socket.handshake.session.username) {
+            const userMessage = { text: msg, username: socket.handshake.session.username };
 
-        io.emit('chat message', msg);
+            messages.push(userMessage);
+
+            io.emit('chat message', userMessage);
+        } else {
+            // Handle the case where the session or username is not set
+            console.log('Username is not set in session');
+        }   
     });
 
     socket.emit('message history', messages);
@@ -68,3 +88,11 @@ io.on('connection', (socket) => {
 server.listen(3000, ipAddress, () => {
     console.log('Servidor rodando na porta 3000');
 }); 
+
+function isValidUsername(username) {
+    if (username == "") {
+        return false;
+    } else {
+        return true;
+    }
+};
