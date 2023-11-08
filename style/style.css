@@ -21,8 +21,9 @@ body {
 
 video {
     position: fixed;
-    top: 0;
-    z-index: -1; /* Coloca o vídeo atrás do conteúdo */
+    top: -20vh;
+    left: -20vw;
+    z-index: -1;
 }
 
 #main {

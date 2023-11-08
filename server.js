@@ -25,12 +25,12 @@ io.use(sharedsession(expressSession, {
     autoSave:true
 }));
 
-app.use(express.json()); // Para analisar application/json
-app.use(express.urlencoded({ extended: true })); // Para analisar application/x-www-form-urlencoded
+app.use(express.json());
+app.use(express.urlencoded({ extended: true })); 
 
 app.get('/', function (req, res) {
     if (req.session.authenticated) {
-        res.redirect('/bola.html');
+        res.redirect('/inicial.html');
     } else {
         res.sendFile(__dirname + '/index.html');
     }
