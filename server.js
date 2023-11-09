@@ -58,7 +58,7 @@ app.post('/login', function (req, res) {
 app.use(express.static(__dirname));
 
 io.on('connection', (socket) => {
-    console.log('a user connected');
+    console.log(`${username} connected`);
 
     // Agora você pode acessar a sessão do express aqui
     console.log("Session Data:", socket.handshake.session);
@@ -82,6 +82,7 @@ io.on('connection', (socket) => {
 
     socket.on('disconnect', () => {
         console.log('user disconnected');
+
     });
 });
 
