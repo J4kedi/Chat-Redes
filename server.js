@@ -1,6 +1,6 @@
 const express = require('express');
 const { createServer } = require('http');
-const ipAddress = '127.0.0.1';
+const ipAddress = '26.129.17.144';
 const { Server } = require('socket.io');
 
 const app = express();
@@ -55,13 +55,19 @@ app.post('/login', function (req, res) {
 });
 
 
+
 app.use(express.static(__dirname));
 
+// Estabelecer conexao com o servidor
 io.on('connection', (socket) => {
     console.log('a user connected');
 
-    // Agora você pode acessar a sessão do express aqui
+    // Avisar aos outros usuários que um novo usuário entrou
+    socket.broadcast.emit('user-joined', { userId: socket.id, username: 'username' });
+
+    // Acessar dados da sessão do usuário
     console.log("Session Data:", socket.handshake.session);
+});
     
     socket.on('chat message', (msg) => {
         console.log('message: ' + msg);
@@ -78,11 +84,13 @@ io.on('connection', (socket) => {
         }   
     });
 
-    socket.emit('message history', messages);
 
-    socket.on('disconnect', () => {
-        console.log('user disconnected');
-    });
+socket.emit('message history', messages);
+
+// Avisar aos outros usuários a desconexão
+socket.on('disconnect', () => {
+    // Enviar uma mensagem de desconexão
+    console.log('user disconnected');
 });
 
 server.listen(3000, ipAddress, () => {

@@ -42,6 +42,14 @@ function submitUsername(data) {
     });
 }
 
+// Informar que um novo usuario entrou
+
+socket.on('user-joined', (data) => {
+    const userElement = document.createElement('div');
+    userElement.textContent = `${data.username} entrou no chat!`;
+    document.getElementById('user-list').appendChild(userElement);
+});
+
 socket.on('message history', (history) => {
     // Exibir o histórico de mensagens para o novo usuário
     const startIndex = Math.max(history.length - maxMessageHistory, 0);
@@ -76,3 +84,35 @@ socket.on('chat message', (userMessage) => {
         history.shift();
     }
 });
+
+
+
+// FECHAR COM /Q
+
+socket.on('disconnect', () => {
+    const chatInput = document.getElementById('chat-input');
+    
+    // Verifica se a mensagem é '/q' (quit chat)
+    if (message === '/q') {
+        socket.emit('quit-chat'); // Informa ao servidor that que o usuario deseja sair do chat
+        socket.disconnect(); // Desconecta do servidor
+        return;
+    }
+
+    // Envia a mensagem se ela não é '/q'
+    socket.emit('chat-message', message);
+});
+
+// Adiciona o evento de saida do chat
+if (chatInput) {
+    chatInput.addEventListener('keydown', function(event) {
+        try {
+            if (event.key === 'Enter') {
+                const message = chatInput.value;
+                chatInput.value = '';
+            }
+        } catch (error) {
+            // Tratar o erro
+        }
+    });
+}
