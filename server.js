@@ -1,6 +1,6 @@
 const express = require('express');
 const { createServer } = require('http');
-const ipAddress = '127.0.0.1';
+const ipAddress = '26.220.169.161';
 const { Server } = require('socket.io');
 
 const app = express();
