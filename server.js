@@ -1,6 +1,6 @@
 const express = require('express');
 const { createServer } = require('http');
-const ipAddress = '26.220.169.161';
+const ipAddress = '26.143.149.78';
 const { Server } = require('socket.io');
 
 const app = express();
@@ -25,12 +25,12 @@ io.use(sharedsession(expressSession, {
     autoSave:true
 }));
 
-app.use(express.json()); // Para analisar application/json
-app.use(express.urlencoded({ extended: true })); // Para analisar application/x-www-form-urlencoded
+app.use(express.json());
+app.use(express.urlencoded({ extended: true })); 
 
 app.get('/', function (req, res) {
     if (req.session.authenticated) {
-        res.redirect('/bola.html');
+        res.redirect('/inicial.html');
     } else {
         res.sendFile(__dirname + '/index.html');
     }
