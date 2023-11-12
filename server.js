@@ -85,8 +85,8 @@ io.on('connection', (socket) => {
     });
 });
 
-server.listen(3000, ipAddress, () => {
-    console.log('Servidor rodando na porta 3000');
+server.listen(5000, ipAddress, () => {
+    console.log('Servidor rodando na porta 5000');
 }); 
 
 function isValidUsername(username) {
