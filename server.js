@@ -7,7 +7,6 @@ const app = express();
 const server = createServer(app);
 const io = new Server(server);
 
-//Gerenciar Sessoes
 const session = require('express-session');
 
 const messages = [];
@@ -40,16 +39,13 @@ app.post('/login', function (req, res) {
     const username = req.body.username;
 
     if (isValidUsername(username)) {
-        // Armazene o nome de usuário na sessão do usuário
         req.session.username = username;
         req.session.authenticated = true;
 
         console.log(`${username}|message: ${username}`)
 
-        // Envie uma resposta de sucesso
         res.send({ success: true });
     } else {
-        // Se o nome de usuário não for válido, envie uma resposta de erro
         res.send({ success: false, message: 'Nome de usuário inválido' });
     }
 });
@@ -60,7 +56,6 @@ app.use(express.static(__dirname));
 io.on('connection', (socket) => {
     console.log(`${username} connected`);
 
-    // Agora você pode acessar a sessão do express aqui
     console.log("Session Data:", socket.handshake.session);
     
     socket.on('chat message', (msg) => {
@@ -73,7 +68,6 @@ io.on('connection', (socket) => {
 
             io.emit('chat message', userMessage);
         } else {
-            // Handle the case where the session or username is not set
             console.log('Username is not set in session');
         }   
     });

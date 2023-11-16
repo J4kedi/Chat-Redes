@@ -39,7 +39,7 @@ video {
 #campo-mensagem {
     position: absolute;
     width: 98.8%;
-    max-height: 200px;
+    max-height: 80%;
     padding: 5px;
     margin-top: 3vh;
     margin-left: 1vh;
@@ -192,7 +192,6 @@ li:nth-child(odd) {
 }
 
 /* Card inicial */
-
 
 .e-card {
     display: flex;

@@ -8,9 +8,6 @@ const campoMensagem = document.getElementById('campo-mensagem');
 
 const maxMessageHistory = 6;
 
-
-// Redirecionar para chat
-
 if(buttonInicio) {
     buttonInicio.addEventListener('click', ()=> {
         const user = inputUserName.value;
@@ -27,23 +24,19 @@ function submitUsername(data) {
 
         success: function (response) {
             if (response.success) {
-                // Redireciona para a página do chat
                 window.location.href = '/inicial.html';
             } else {
-                // Trata o erro
                 console.log(response.message);
             }
         },
 
         error: function (error) {
-            // Trata o erro
             console.log(error);
         }
     });
 }
 
 socket.on('message history', (history) => {
-    // Exibir o histórico de mensagens para o novo usuário
     const startIndex = Math.max(history.length - maxMessageHistory, 0);
     const limitedHistory = history.slice(startIndex);
 
@@ -70,7 +63,7 @@ socket.on('chat message', (userMessage) => {
     item.textContent = `${userMessage.username}: ${userMessage.text}`;
     campoMensagem.appendChild(item);
 
-    window.scrollTo(0, document.body.scrollHeight);
+    campoMensagem.scrollTop = (0, document.campoMensagem.scrollHeight);
 
     if (history.length > maxMessageHistory) {
         history.shift();
