@@ -36,6 +36,14 @@ function submitUsername(data) {
     });
 }
 
+socket.on('conectado', (mensagem, username) => {
+    if (username !== undefined) {
+        const item = document.createElement('li');
+        item.textContent = `${mensagem}`;
+        item.style.backgroundColor = '#FFF';
+        campoMensagem.appendChild(item);
+}});
+
 socket.on('message history', (history) => {
     const startIndex = Math.max(history.length - maxMessageHistory, 0);
     const limitedHistory = history.slice(startIndex);
@@ -43,6 +51,7 @@ socket.on('message history', (history) => {
     limitedHistory.forEach((userMessage) => {
         const item = document.createElement('li');
         item.textContent = `${userMessage.username}: ${userMessage.text}`;
+        item.style.backgroundColor = userMessage.color;
         campoMensagem.appendChild(item);
     });
 });
@@ -59,13 +68,31 @@ if (form && input) {
 
 socket.on('chat message', (userMessage) => {
     const item = document.createElement('li');
+    const username = userMessage.username;
+    const backColor = userMessage.color; 
+    const texto = userMessage.text
 
-    item.textContent = `${userMessage.username}: ${userMessage.text}`;
-    campoMensagem.appendChild(item);
+    if(texto == '/q') {
+        fetch(`/logout?usernam=${username}`, { method: 'GET' })
+        .then(response => {
+            if (response.redirected) {
+                window.location.href = response.url;
+            }
+        })
+        .catch(err => console.error(err));
 
-    campoMensagem.scrollTop = (0, document.campoMensagem.scrollHeight);
-
-    if (history.length > maxMessageHistory) {
-        history.shift();
+        item.textContent = `${username} Saiu do chat`;
+        item.style.backgroundColor = '#FFF';
+        campoMensagem.appendChild(item);
+    } else {
+        item.textContent = `${username}: ${texto}`;
+        item.style.backgroundColor = backColor;
+        campoMensagem.appendChild(item);
+    
+        campoMensagem.scrollTop = campoMensagem.scrollHeight;
+    
+        if (history.length > maxMessageHistory) {
+            history.shift();
+        }
     }
 });

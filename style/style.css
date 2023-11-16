@@ -49,20 +49,10 @@ video {
     overflow-y: auto;
 }
 
-#messages,
 li {
-    background: var(--main--color);
-    text-align: justify;
-    display: inline-block;
     padding: 0.5rem 1rem;
     z-index: 2;
     width: 90%;
-    opacity: 0.85;
-}
-
-#messages,
-li:nth-child(odd) {
-    background: #685b5b;
     opacity: 0.85;
 }
 
