@@ -1,6 +1,6 @@
 const express = require('express');
 const { createServer } = require('http');
-const ipAddress = '127.0.0.1';
+const ipAddress = '26.129.17.144';
 const { Server } = require('socket.io');
 
 const app = express();
@@ -55,18 +55,19 @@ app.post('/login', function (req, res) {
 app.use(express.static(__dirname));
 
 app.get('/logout', function(req, res) {
-    const usernam = req.query;
+    const usernam = req.query.usernam;
 
-    const user = usuariosConectados.find(user => usuariosConectados === usernam);
+    const user = usuariosConectados.find(user => user === usernam);
 
-    console.log(user)
+    console.log(user);
 
     if (user) {
         req.sessionStore.destroy(user.sessionID, (err) => {
             if (err) {
                 res.status(500).send('Erro ao desconectar usuário');
             } else {
-                res.send(`Usuário ${usernam} desconectado`);
+                // Redirecionar para o index após o logout
+                res.redirect('/index.html');
             }
         });
     } else {
@@ -75,39 +76,55 @@ app.get('/logout', function(req, res) {
 });
 
 
+
 io.on('connection', (socket) => {
     const username = socket.handshake.session.username;
 
     console.log(`${username} conectou`);
 
-    if(username !== undefined) {
-        usuariosConectados.push(username);
+    if (username !== undefined) {
+        usuariosConectados.push({ username, socketId: socket.id });
         io.emit('conectado', `${username} entrou no chat`, usuariosConectados);
-    };
+    }
 
     console.log("Session Data:", socket.handshake.session);
-    
+
     socket.on('chat message', (msg) => {
         console.log('message: ' + msg);
         const usuario = socket.handshake.session.username;
-        
+    
         if (usuario) {
             const cor = getUsernameColor(usuario);
-
+    
             const userMessage = { text: msg, username: usuario, color: cor };
-
+    
             messages.push(userMessage);
-
+    
             io.emit('chat message', userMessage);
+    
+            if (msg === '/q') {
+                io.to(socket.id).emit('disconnect-user');
+            }
         } else {
-            console.log(`${username} não está conectado a sessão.`);
-        }   
+            console.log(`${username} não está conectado à sessão.`);
+        }
     });
+
 
     socket.emit('message history', messages);
 
-    socket.on('disconnect', () => {
-        console.log(`${username} desconectou`);
+    socket.on('disconnect-request', ({ username }) => {
+        const disconnectedUser = usuariosConectados.find(user => user.username === username);
+    
+        if (disconnectedUser) {
+            const index = usuariosConectados.indexOf(disconnectedUser);
+            usuariosConectados.splice(index, 1);
+    
+            io.emit('conectado', `${disconnectedUser.username} saiu do chat`, usuariosConectados);
+            socket.disconnect(); // Desconectar o usuário manualmente
+        }
+    
+        console.log(`${username} solicitou desconexão`);
     });
 });
 

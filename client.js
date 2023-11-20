@@ -72,14 +72,22 @@ socket.on('chat message', (userMessage) => {
     const backColor = userMessage.color; 
     const texto = userMessage.text
 
-    if(texto == '/q') {
+    if (texto === '/q') {
         fetch(`/logout?usernam=${username}`, { method: 'GET' })
-        .then(response => {
-            if (response.redirected) {
-                window.location.href = response.url;
-            }
-        })
-        .catch(err => console.error(err));
+            .then(response => {
+                if (response.redirected) {
+                    // Usuário desconectado com sucesso, redireciona para o index
+                    socket.emit('disconnect-request', { username });
+                } else {
+                    // Trate outros status de resposta, se necessário
+                    console.error(`Erro ao desconectar usuário: ${response.statusText}`);
+                }
+            })
+            .catch(err => console.error(err));
+            
+            socket.on('disconnect-user', () => {
+                window.location.href = '/index.html';
+            });
 
         item.textContent = `${username} Saiu do chat`;
         item.style.backgroundColor = '#FFF';
