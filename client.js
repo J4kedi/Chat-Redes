@@ -83,9 +83,9 @@ socket.on('chat message', (userMessage) => {
                 }
             })
             .catch(err => console.error(err));
-    };
-
-    criarMsg(userMessage, item);
+    } else {
+        criarMsg(userMessage, item);
+    }
 });
 
 socket.on('redirect', (url) => {

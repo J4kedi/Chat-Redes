@@ -24,7 +24,7 @@ app.use(expressSession);
 
 const sharedsession = require("express-socket.io-session");
 io.use(sharedsession(expressSession, {
-    autoSave:true
+    autoSave:false
 }));
 
 app.use(express.json());
@@ -61,24 +61,23 @@ app.get('/logout', async function(req, res) {
 
     if (disconnectedUser) {
         try {
+            // Envia o comando de redirecionamento apenas para o usuário que está desconectando
             io.to(disconnectedUser.socketId).emit('redirect', '/index.html');
-            await new Promise((resolve, reject) => {
-                
-                req.sessionStore.destroy(disconnectedUser.socketId, (err) => {
 
+            // Aguarda um pouco antes de destruir a sessão para dar tempo de enviar o comando de redirecionamento
+            await new Promise(resolve => setTimeout(resolve, 100));
+
+            // Destrói a sessão do usuário desconectado
+            req.sessionStore.destroy(disconnectedUser.socketId, (err) => {
                 if (err) {
-                    reject('Erro ao desconectar usuário');
+                    res.status(500).send('Erro ao desconectar usuário');
                 } else {
-                    resolve();
+                    res.send(`Usuário ${disconnectedUser.username} desconectado`);
                 }
-                });
             });
-
-            res.send(`Usuário ${disconnectedUser.username} desconectado`);
         } catch (error) {
             res.status(500).send(error);
         }
-
     } else {
         res.status(404).send('Usuário não encontrado');
     }
