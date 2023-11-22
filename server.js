@@ -1,17 +1,23 @@
-const express = require('express');
 const { createServer } = require('http');
+<<<<<<< Updated upstream
 const ipAddress = '26.129.17.144';
+=======
+>>>>>>> Stashed changes
 const { Server } = require('socket.io');
+const ipAddress = '127.0.0.1';
+const express = require('express');
+const session = require('express-session');
 
 const app = express();
 const server = createServer(app);
 const io = new Server(server);
 
-const session = require('express-session');
-
+//lista de mensagens 
 const messages = [];
+//Lista de usuários conectados
 const usuariosConectados = [];
 
+//Criar Sessão
 const expressSession = session({
     secret: 'du@VT~2Wr4p]I*|)JLt%j3R03Mm%_XgB',
     resave: false,
