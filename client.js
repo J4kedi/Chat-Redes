@@ -39,9 +39,7 @@ function submitUsername(data) {
 socket.on('conectado', (mensagem, username) => {
     if (username !== undefined) {
         const item = document.createElement('li');
-        item.textContent = `${mensagem}`;
-        item.style.backgroundColor = '#FFF';
-        campoMensagem.appendChild(item);
+        criarMsgEntrada(mensagem, item);
 }});
 
 socket.on('message history', (history) => {
@@ -50,9 +48,8 @@ socket.on('message history', (history) => {
 
     limitedHistory.forEach((userMessage) => {
         const item = document.createElement('li');
-        item.textContent = `${userMessage.username}: ${userMessage.text}`;
-        item.style.backgroundColor = userMessage.color;
-        campoMensagem.appendChild(item);
+        
+        criarMsg(userMessage, item);
     });
 });
 
@@ -69,38 +66,50 @@ if (form && input) {
 socket.on('chat message', (userMessage) => {
     const item = document.createElement('li');
     const username = userMessage.username;
-    const backColor = userMessage.color; 
     const texto = userMessage.text
 
     if (texto === '/q') {
-        fetch(`/logout?usernam=${username}`, { method: 'GET' })
+        fetch(`/logout?username=${username}`, { method: 'GET' })
             .then(response => {
                 if (response.redirected) {
-                    // Usuário desconectado com sucesso, redireciona para o index
-                    socket.emit('disconnect-request', { username });
-                } else {
                     // Trate outros status de resposta, se necessário
                     console.error(`Erro ao desconectar usuário: ${response.statusText}`);
+                } else {
+                    // Usuário desconectado com sucesso, redireciona para o index
+                    item.textContent = `${username} Saiu do chat`;
+                    item.style.backgroundColor = '#FFF';
+                    campoMensagem.appendChild(item);
+                    scroll();
                 }
             })
             .catch(err => console.error(err));
-            
-            socket.on('disconnect-user', () => {
-                window.location.href = '/index.html';
-            });
+    };
 
-        item.textContent = `${username} Saiu do chat`;
-        item.style.backgroundColor = '#FFF';
-        campoMensagem.appendChild(item);
-    } else {
-        item.textContent = `${username}: ${texto}`;
-        item.style.backgroundColor = backColor;
-        campoMensagem.appendChild(item);
-    
-        campoMensagem.scrollTop = campoMensagem.scrollHeight;
-    
-        if (history.length > maxMessageHistory) {
-            history.shift();
-        }
-    }
+    criarMsg(userMessage, item);
 });
+
+socket.on('redirect', (url) => {
+    window.location.href = url;
+});
+
+function criarMsg(userMessage, item) {
+    const username = userMessage.username;
+    const backColor = userMessage.color; 
+    const texto = userMessage.text
+
+    item.textContent = `${username}: ${texto}`;
+    item.style.backgroundColor = backColor;
+    campoMensagem.appendChild(item);
+    scroll();
+}
+
+function scroll() {
+    campoMensagem.scrollTop = campoMensagem.scrollHeight;
+}
+
+function criarMsgEntrada(mensagem, item) {
+    item.textContent = `${mensagem}`;
+    item.style.backgroundColor = '#FFF';
+    campoMensagem.appendChild(item);
+    scroll();
+};

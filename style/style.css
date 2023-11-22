@@ -21,8 +21,8 @@ body {
 
 video {
     position: fixed;
-    top: -20vh;
-    left: -20vw;
+    top: -10vh;
+    left: -0vw;
     z-index: -1;
 }
 

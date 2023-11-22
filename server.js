@@ -1,6 +1,6 @@
 const { createServer } = require('http');
 const { Server } = require('socket.io');
-const ipAddress = '127.0.0.1';
+const ipAddress = '26.143.149.78';
 const express = require('express');
 const session = require('express-session');
 
@@ -45,7 +45,7 @@ app.post('/login', function (req, res) {
         req.session.username = username;
         req.session.authenticated = true;
 
-        console.log(`${username}|message: ${username}`)
+        console.log(`nickname: ${username}`)
 
         res.send({ success: true });
     } else {
@@ -53,80 +53,74 @@ app.post('/login', function (req, res) {
     }
 });
 
+app.get('/logout', async function(req, res) {
+    const username = req.query.username;
+    const disconnectedUser = usuariosConectados.find(user => user.username === username);
 
-app.use(express.static(__dirname));
+    usuariosConectados.splice(usuariosConectados.indexOf(disconnectedUser), 1);
 
-app.get('/logout', function(req, res) {
-    const usernam = req.query.usernam;
+    if (disconnectedUser) {
+        try {
+            io.to(disconnectedUser.socketId).emit('redirect', '/index.html');
+            await new Promise((resolve, reject) => {
+                
+                req.sessionStore.destroy(disconnectedUser.socketId, (err) => {
 
-    const user = usuariosConectados.find(user => user === usernam);
+                if (err) {
+                    reject('Erro ao desconectar usuário');
+                } else {
+                    resolve();
+                }
+                });
+            });
 
-    console.log(user);
+            res.send(`Usuário ${disconnectedUser.username} desconectado`);
+        } catch (error) {
+            res.status(500).send(error);
+        }
 
-    if (user) {
-        req.sessionStore.destroy(user.sessionID, (err) => {
-            if (err) {
-                res.status(500).send('Erro ao desconectar usuário');
-            } else {
-                // Redirecionar para o index após o logout
-                res.redirect('/index.html');
-            }
-        });
     } else {
         res.status(404).send('Usuário não encontrado');
     }
 });
 
+app.use(express.static(__dirname));
 
 
 io.on('connection', (socket) => {
     const username = socket.handshake.session.username;
 
-    console.log(`${username} conectou`);
+    console.log(`${username} conectado`);
+
+    socket.emit('message history', messages);
 
     if (username !== undefined) {
         usuariosConectados.push({ username, socketId: socket.id });
+        console.log(usuariosConectados);
         io.emit('conectado', `${username} entrou no chat`, usuariosConectados);
     }
 
     console.log("Session Data:", socket.handshake.session);
 
     socket.on('chat message', (msg) => {
-        console.log('message: ' + msg);
         const usuario = socket.handshake.session.username;
+        console.log(`${usuario}| message: ${msg}`);
     
         if (usuario) {
             const cor = getUsernameColor(usuario);
     
             const userMessage = { text: msg, username: usuario, color: cor };
-    
-            messages.push(userMessage);
-    
+            
+            historicoMsg(userMessage);
+            
             io.emit('chat message', userMessage);
-    
-            if (msg === '/q') {
-                io.to(socket.id).emit('disconnect-user');
-            }
         } else {
             console.log(`${username} não está conectado à sessão.`);
         }
     });
 
-
-    socket.emit('message history', messages);
-
-    socket.on('disconnect-request', ({ username }) => {
-        const disconnectedUser = usuariosConectados.find(user => user.username === username);
-    
-        if (disconnectedUser) {
-            const index = usuariosConectados.indexOf(disconnectedUser);
-            usuariosConectados.splice(index, 1);
-    
-            io.emit('conectado', `${disconnectedUser.username} saiu do chat`, usuariosConectados);
-            socket.disconnect(); // Desconectar o usuário manualmente
-        }
-    
-        console.log(`${username} solicitou desconexão`);
+    socket.on('disconnect', () => {
+        console.log(`${username} desconectou`);
     });
 });
 
@@ -135,7 +129,7 @@ server.listen(3000, ipAddress, () => {
 }); 
 
 function isValidUsername(username) {
-    if (username == "") {
+    if (username == "" || usuariosConectados.some(user => user.username === username)) {
         return false;
     } else {
         return true;
@@ -150,4 +144,12 @@ function getUsernameColor(username) {
     
     const finalColor = `#${(hashCode & 0x00FFFFFF).toString(16).toUpperCase().padStart(6, '0')}`;
     return finalColor;
+}
+
+function historicoMsg(userMessage) {
+    messages.push(userMessage);
+            
+    if(messages.length > 6){
+        messages.shift();
+    }
 }
