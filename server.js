@@ -1,8 +1,4 @@
 const { createServer } = require('http');
-<<<<<<< Updated upstream
-const ipAddress = '26.129.17.144';
-=======
->>>>>>> Stashed changes
 const { Server } = require('socket.io');
 const ipAddress = '127.0.0.1';
 const express = require('express');
