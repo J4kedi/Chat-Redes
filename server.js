@@ -61,13 +61,10 @@ app.get('/logout', async function(req, res) {
 
     if (disconnectedUser) {
         try {
-            // Envia o comando de redirecionamento apenas para o usuário que está desconectando
             io.to(disconnectedUser.socketId).emit('redirect', '/index.html');
 
-            // Aguarda um pouco antes de destruir a sessão para dar tempo de enviar o comando de redirecionamento
             await new Promise(resolve => setTimeout(resolve, 100));
 
-            // Destrói a sessão do usuário desconectado
             req.sessionStore.destroy(disconnectedUser.socketId, (err) => {
                 if (err) {
                     res.status(500).send('Erro ao desconectar usuário');
